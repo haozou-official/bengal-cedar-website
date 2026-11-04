@@ -3,12 +3,15 @@
 // It never pretends that the snapshots are a live interactive model endpoint.
 const steps=[
  {eyebrow:'THE LIVING REPORT',title:'One report. Connected evidence.',desc:'Track a developing story alongside its sources.',target:'#overview-figure',region:[.015,.16,.97,.72],figure:'#overview-figure .image-button'},
- {eyebrow:'EVOLVING SUMMARIZATION',title:'Watch the report change.',desc:'Select a date to compare the real T0–T4 report captures.',target:'#checkpoint-figure',region:[.13,.30,.45,.57],checkpoint:1,figure:'#checkpoint-figure'},
+ {eyebrow:'EVOLVING SUMMARIZATION',title:'Start with a replayable timeline.',desc:'Move across T0–T4 to inspect how the same report evolves as new evidence arrives.',target:'.timeline-list',region:[0,.01,1,.98],checkpoint:0,figure:'#checkpoint-figure'},
+ {eyebrow:'SELECTIVE UPDATES',title:'Only the affected passages change.',desc:'Later checkpoints update the parts that need revision while leaving supported content in place.',target:'#checkpoint-figure',region:[.12,.29,.47,.59],checkpoint:4,figure:'#checkpoint-figure'},
  {eyebrow:'SOURCE GROUNDING',title:'Follow a claim to its source.',desc:'Inspect the cited article and supporting passage.',target:'.evidence-visual .image-button',region:[.18,.13,.65,.76],figure:'.evidence-visual .image-button'},
  {eyebrow:'MULTILINGUAL EVIDENCE',title:'Keep the original in view.',desc:'Explore Arabic-source evidence with an English report.',target:'.language-visual .image-button',region:[.05,.1,.9,.8],figure:'.language-visual .image-button'},
  {eyebrow:'MULTIMODAL EVIDENCE',title:'See what images can support.',desc:'Examine visuals beside the claim—and their limits.',target:'.visual-panel-main .image-button',region:[.08,.1,.84,.8],figure:'.visual-panel-main .image-button'},
- {eyebrow:'ANALYST ASSISTANT',title:'Ask—and review the answer.',desc:'Inspect supporting evidence and flagged claims.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'review',figure:'#dialogue-image-button'},
- {eyebrow:'ANALYST CONTROL',title:'The analyst makes the call.',desc:'Choose when a reviewed finding enters the report.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'incorporate',figure:'#dialogue-image-button'}
+ {eyebrow:'ANALYST ASSISTANT',title:'Ask what the report does not yet explain.',desc:'Use the assistant to probe the current report and its implications.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'ask',figure:'#dialogue-image-button'},
+ {eyebrow:'ANSWER REVIEW',title:'Check the answer against evidence.',desc:'Review flagged statements and inspect the support behind the response.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'review',figure:'#dialogue-image-button'},
+ {eyebrow:'CONVERSATION MEMORY',title:'Carry forward useful findings.',desc:'Keep relevant conversation takeaways available for later analysis.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'remember',figure:'#dialogue-image-button'},
+ {eyebrow:'ANALYST CONTROL',title:'Choose what enters the report.',desc:'A reviewed finding becomes part of the report only when the analyst decides to incorporate it.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'incorporate',figure:'#dialogue-image-button'}
 ];
 const layer=document.getElementById('tour-layer');
 const focus=document.getElementById('tour-focus');const ring=document.getElementById('tour-ring');const card=document.getElementById('tour-card');
