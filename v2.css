@@ -159,3 +159,61 @@ body.tour-active{scroll-behavior:auto}
 .pi-person figcaption span{font:10px/1.3 var(--mono);color:#698777}
 @media(max-width:950px){.pi-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:25px 15px}}
 @media(max-width:640px){.paper-item{grid-template-columns:1fr;gap:4px;padding-top:12px}.paper-item a{font-size:13px}.research-details{gap:12px}.pi-section{padding:38px 0 20px}.pi-section-heading{display:block}.pi-section-heading>span{display:block;margin-top:9px}.pi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 13px}.pi-person strong{font-size:12px}.pi-person img{aspect-ratio:1.1 / 1}}
+
+/* v2.2 — Institution-clustered PI directory */
+.pi-section{padding:72px 0 68px}
+.pi-section-heading{border-top:1px solid #b5cabe;padding:26px 0 42px;display:block}
+.pi-section-heading .pi-label{display:block;font:10px/1.5 var(--mono);letter-spacing:.12em;color:#5c866f;margin-bottom:14px}
+.pi-section-heading h2{font:500 clamp(34px,4.2vw,62px)/1.07 var(--sans);letter-spacing:-.065em;color:#1b372d;margin:0}
+.pi-title-dot{color:#6eac83}
+.pi-institutions{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,2fr) minmax(0,1.2fr);gap:clamp(22px,3vw,43px);align-items:start}
+.pi-university{min-width:0}
+.pi-university:not(:first-child){border-left:1px solid #d2dfd5;padding-left:clamp(16px,2vw,28px)}
+.pi-university-heading{display:flex;justify-content:space-between;align-items:baseline;gap:9px;border-top:1px solid #9fbba8;padding-top:14px;margin-bottom:26px;min-height:57px}
+.pi-university-heading h3{margin:0;font:600 clamp(12px,1.12vw,15px)/1.35 var(--sans);letter-spacing:-.012em;color:#294c3b}
+.pi-university-heading>span{font:10px/1.3 var(--mono);white-space:nowrap;color:#7a9b85}
+.pi-people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(9px,1.2vw,19px)}
+.pi-university-illinois .pi-people{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pi-university-nyu .pi-people{grid-template-columns:minmax(0,1fr)}
+.pi-profile{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:13px}
+.pi-photo-link{display:block;width:min(100%,130px);aspect-ratio:1;border-radius:50%;overflow:hidden;isolation:isolate;background:#dfe9df;outline:1px solid #bacdbc;outline-offset:4px;transition:outline-color .2s,outline-offset .2s,transform .25s}
+.pi-photo-link img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease,filter .25s ease}
+.pi-profile:hover .pi-photo-link,.pi-photo-link:focus-visible{outline-color:#3d8c62;outline-offset:6px;transform:translateY(-2px)}
+.pi-profile:hover .pi-photo-link img{transform:scale(1.045)}
+.pi-name{display:inline-flex;align-items:baseline;gap:5px;max-width:100%;font:600 clamp(12px,1.06vw,15px)/1.38 var(--sans);letter-spacing:-.016em;color:#203d31;text-decoration:none;transition:color .2s}
+.pi-name span{font:14px/1 var(--serif);color:#518969;opacity:0;transform:translate(-3px,2px);transition:opacity .2s,transform .2s}
+.pi-name:hover,.pi-name:focus-visible{color:#236c49;text-decoration:underline;text-underline-offset:4px}
+.pi-name:hover span,.pi-name:focus-visible span{opacity:1;transform:none}
+.cedar-program-mark{border-top:1px solid #bfcec2;padding:19px 0 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.cedar-program-copy{display:flex;flex-direction:column;gap:8px}
+.cedar-program-copy>span{font:10px/1.4 var(--mono);letter-spacing:.07em;color:#718f7b}
+.cedar-program-copy a{font:600 13px/1.5 var(--sans);color:#29553d}
+.cedar-program-copy a:hover{text-decoration:underline;text-underline-offset:4px}
+.cedar-program-copy b{font-weight:400;color:#548b6c;padding-left:4px}
+.cedar-program-mark>img{width:76px;max-height:90px;object-fit:contain;mix-blend-mode:multiply}
+@media(max-width:1100px){
+ .pi-institutions{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:35px}
+ .pi-university-columbia{grid-column:1/-1}
+ .pi-university-illinois{border-left:0!important;padding-left:0!important}
+ .pi-university-nyu{grid-column:auto}
+ .pi-people{gap:16px}
+ .pi-photo-link{width:min(100%,124px)}
+ .pi-university-heading{min-height:0}
+}
+@media(max-width:640px){
+ .pi-section{padding:42px 0 38px}
+ .pi-section-heading{padding:22px 0 33px}
+ .pi-section-heading h2{font-size:clamp(32px,9vw,47px)}
+ .pi-institutions{grid-template-columns:1fr;gap:37px}
+ .pi-university-columbia,.pi-university-nyu{grid-column:auto}
+ .pi-university{border-left:0!important;padding-left:0!important}
+ .pi-university-heading{margin-bottom:24px}
+ .pi-people{grid-template-columns:repeat(2,minmax(0,1fr));gap:27px 18px}
+ .pi-university-illinois .pi-people{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .pi-photo-link{width:min(100%,116px)}
+ .pi-name{font-size:13px}
+ .cedar-program-mark{padding:19px 0 23px}
+ .cedar-program-mark>img{width:61px}
+}
+@media(prefers-reduced-motion:reduce){.pi-photo-link,.pi-photo-link img,.pi-name,.pi-name span{transition:none!important}}
+
