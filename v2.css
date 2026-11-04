@@ -132,3 +132,30 @@ body.tour-active{scroll-behavior:auto}
 @media(max-width:880px){.cedar-nav-cta{display:none}.home-open-grid{grid-template-columns:1fr;gap:29px}.home-descriptor{max-width:590px}.home-opening{padding-top:60px}.entry-content{grid-template-columns:1fr;gap:18px}.research-demo-link{grid-column:1}.home-bottom-grid{grid-template-columns:1fr 160px}.demo-intro-grid{grid-template-columns:1fr}.demo-intro-aside{display:none}}
 @media(max-width:640px){.cedar-header,.demo-page .site-header{height:68px}.cedar-brand{gap:9px}.cedar-brand img{width:98px}.brand-cedar{font-size:18px}.brand-tiny{font-size:7px}.brand-divider{height:25px}.cedar-main-nav{gap:10px}.cedar-main-nav a{font-size:11px;padding:6px 0}.home-opening{padding:45px 0 50px}.home-eyebrow,.demo-overline{font-size:9px}.home-eyebrow>span:last-child,.demo-overline span:last-child{display:none}.home-open-grid{padding-top:39px}.home-open-grid h1{font-size:clamp(53px,12.9vw,78px)}.home-descriptor p{font-size:14px}.home-action{margin-top:24px}.home-research{padding:14px 0 40px}.home-register-kicker{font-size:9px}.research-toggle{grid-template-columns:35px 1fr 24px;gap:10px;padding:23px 0 25px}.entry-num{font-size:12px}.entry-title{font-size:clamp(21px,6vw,30px)}.entry-icon{font-size:29px}.entry-content{margin:0 4px 29px 44px;padding:0}.entry-content>p{font-size:13px}.publication{padding-left:12px}.publication a{font-size:14px}.home-bottom{padding:35px 0 40px}.home-bottom-grid{grid-template-columns:1fr;gap:28px}.home-ident h2{font-size:34px}.home-tigers{display:none}.home-logo-row{gap:14px}.home-logo-row img{max-height:59px}.home-footer-grid{flex-wrap:wrap;line-height:1.7;font-size:9px}.home-footer-grid>span:nth-child(2){display:none}.demo-intro{padding-top:37px}.demo-intro h1{font-size:clamp(42px,10.6vw,64px)}.demo-overline{font-size:8px}.demo-actions{gap:14px}.demo-jump{gap:13px 17px}.demo-jump button{margin-left:0}.demo-footer-inner{flex-wrap:wrap;font-size:10px}.tour-card{width:100vw!important;max-width:100vw!important;left:0!important;bottom:0!important;top:auto!important;border-radius:15px 15px 0 0;box-shadow:0 -13px 50px #01190c68;max-height:min(47vh,335px);overflow-y:auto}.tour-top{padding:11px 18px}.tour-copy-wrap{padding:13px 18px 12px}.tour-card h2{font-size:21px;margin:6px 0 8px}.tour-card p{font-size:12px;line-height:1.45}.tour-full{margin:9px 0 0}.tour-bottom{padding:9px 17px}.tour-controls button{padding:8px 9px}.tour-focus,.tour-ring{border-radius:7px}}
 @media(prefers-reduced-motion:reduce){.research-panel{animation:none}.tour-focus,.tour-ring,.tour-card{transition:none!important}}
+
+/* v2.1 — Public research register and principal investigators */
+.cedar-header .cedar-nav-cta{color:#174936;background:#edf4ec;border-color:#86ad96;box-shadow:none;text-shadow:none}
+.cedar-header .cedar-nav-cta:hover,.cedar-header .cedar-nav-cta:focus-visible{color:#fff;background:#19543d;border-color:#19543d}
+.research-details{display:grid;gap:14px;min-width:0}
+.paper-item{border-top:1px solid #c7d9cb;padding:13px 0 0;display:grid;grid-template-columns:123px minmax(0,1fr);gap:15px;align-items:start}
+.paper-item:first-child{border-top:0;padding-top:0}
+.paper-venue{font:10px/1.55 var(--mono);letter-spacing:.035em;color:#577c66;white-space:normal;padding-top:2px}
+.paper-item a{font:500 14px/1.5 var(--sans);color:#204f3b;transition:color .2s}
+.paper-item a span{font-weight:400;color:#53896c;white-space:nowrap}
+.paper-item a:hover,.paper-item a:focus-visible{color:#0c8c5d;text-decoration:underline;text-underline-offset:4px}
+.research-in-progress{margin:5px 0 0;font:12px/1.65 var(--sans);color:#647e6a}
+.research-in-progress span{font:10px/1.4 var(--mono);color:#548168;letter-spacing:.05em;margin-right:8px}
+.research-details .research-demo-link{justify-self:start;grid-column:auto;margin-top:6px;display:inline-block}
+.pi-section{padding:64px 0 42px}
+.pi-section-heading{display:flex;justify-content:space-between;gap:15px;align-items:baseline;border-top:1px solid #b5cabe;padding:21px 0 25px}
+.pi-section-heading h2{font:500 clamp(22px,2.15vw,32px)/1.25 var(--sans);letter-spacing:-.04em;color:#203d31;margin:0}
+.pi-section-heading>span{font:10px var(--mono);color:#6a8773;letter-spacing:.04em}
+.pi-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:13px}
+.pi-person{margin:0;min-width:0}
+.pi-person img{display:block;width:100%;aspect-ratio:1 / 1.05;object-fit:cover;object-position:center 28%;background:#dde6dd;filter:saturate(.83);transition:filter .25s ease,transform .25s ease}
+.pi-person:hover img{filter:saturate(1);transform:translateY(-3px)}
+.pi-person figcaption{display:flex;flex-direction:column;padding-top:11px;gap:4px}
+.pi-person strong{font:600 12px/1.35 var(--sans);color:#1f4534}
+.pi-person figcaption span{font:10px/1.3 var(--mono);color:#698777}
+@media(max-width:950px){.pi-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:25px 15px}}
+@media(max-width:640px){.paper-item{grid-template-columns:1fr;gap:4px;padding-top:12px}.paper-item a{font-size:13px}.research-details{gap:12px}.pi-section{padding:38px 0 20px}.pi-section-heading{display:block}.pi-section-heading>span{display:block;margin-top:9px}.pi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 13px}.pi-person strong{font-size:12px}.pi-person img{aspect-ratio:1.1 / 1}}
