@@ -385,3 +385,63 @@ body.tour-active{scroll-behavior:auto}
 /* =========================================
    End of CEDAR v2.6
    ========================================= */
+
+
+/* ================================================
+   CEDAR v2.7 — Desktop Scale and Image Fit
+   ================================================ */
+
+/*
+ * Desktop presentation scale.
+ *
+ * Scale only the visible page sections.
+ * The guided-tour overlay remains outside the
+ * zoomed elements, preserving viewport coordinates.
+ *
+ * No visible zoom control.
+ */
+
+@media screen and (min-width: 1280px) {
+
+  body.demo-page > header,
+  body.demo-page > main,
+  body.demo-page > footer {
+    zoom: 1.25;
+  }
+
+}
+
+/*
+ * Multimodal evidence screenshots.
+ *
+ * Show the entire source image instead of
+ * cropping it to fill the panel.
+ */
+
+.demo-page .visual-showcase {
+  align-items: start;
+}
+
+.demo-page .visual-panel-main,
+.demo-page .visual-panel-secondary {
+  align-self: start;
+}
+
+.demo-page .visual-showcase .image-button {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.demo-page .visual-showcase .image-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  object-fit: contain;
+  object-position: center;
+}
+
+/* End CEDAR v2.7 */
+
