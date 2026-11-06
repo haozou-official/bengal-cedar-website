@@ -16,7 +16,7 @@ const steps=[
 
  {eyebrow:'SOURCE TO SUMMARY',title:'Follow the multilingual evidence into the report.',desc:'The source remains linked to the specific statement it supports.',target:'.language-visual .image-button',region:[.035,.205,.93,.155],shot:'tour_ceuta_open.png',arrow:true,figure:'.language-visual .image-button'},
 
- {eyebrow:'VISUAL EVIDENCE',title:'Images provide context, not automatic proof.',desc:'Inspect the visual evidence panel and what it can establish.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
+ {eyebrow:'MULTIMODAL EVIDENCE',title:'We also support multimodal evidence.',desc:'Explore visual evidence linked to the report.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
 
  {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.03,.34,.94,.56],arrow:{from:[.745,.74],to:[.36,.875],bend:[.035,-.09]},dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
 
