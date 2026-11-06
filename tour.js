@@ -6,11 +6,11 @@ const steps=[
 
  {eyebrow:'REPLAY TIMELINE',title:'Five dates. One evolving report.',desc:'Use T0–T4 to revisit the report as evidence arrives.',target:'.timeline-list',region:[.03,.02,.94,.95],checkpoint:2,figure:'#checkpoint-figure'},
 
- {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T4, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.145,.34,.345,.30],checkpoint:4,figure:'#checkpoint-figure'},
+ {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T4, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.145,.34,.345,.30],arrow:{from:[.39,.525],to:[.38,.37],bend:[.105,0]},checkpoint:4,figure:'#checkpoint-figure'},
 
  {eyebrow:'SOURCE LIST',title:'Browse the evidence.',desc:'Each checkpoint has a source list analysts can inspect.',target:'.evidence-visual .image-button',region:[.04,.15,.92,.75],shot:'tour_hormuz_list.png',figure:'.evidence-visual .image-button'},
 
- {eyebrow:'SOURCE INSPECTION',title:'Open the original evidence.',desc:'Read provenance, linked statements, and highlighted source text.',target:'.evidence-visual .image-button',region:[.035,.16,.93,.78],shot:'tour_hormuz_open.png',figure:'.evidence-visual .image-button'},
+ {eyebrow:'SOURCE INSPECTION',title:'Open the original evidence.',desc:'Read provenance, linked statements, and highlighted source text.',target:'.evidence-visual .image-button',region:[.035,.16,.93,.78],arrow:{from:[.73,.35],to:[.64,.63],bend:[.095,0]},shot:'tour_hormuz_open.png',figure:'.evidence-visual .image-button'},
 
  {eyebrow:'BEYOND ENGLISH',title:'Sources are not limited to English.',desc:'An Arabic source appears beside the Ceuta report.',target:'.language-visual .image-button',region:[.585,.585,.385,.13],shot:'p04_2.webp?v=20261105-hd-refresh',figure:'.language-visual .image-button'},
 
@@ -18,7 +18,7 @@ const steps=[
 
  {eyebrow:'VISUAL EVIDENCE',title:'Images provide context, not automatic proof.',desc:'Inspect the visual evidence panel and what it can establish.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
 
- {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.03,.34,.94,.56],dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
+ {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.03,.34,.94,.56],arrow:{from:[.745,.74],to:[.36,.875],bend:[.035,-.09]},dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
 
  {eyebrow:'GROUNDED RESPONSE',title:'Read the assistant’s answer.',desc:'The response draws on the report and its cited evidence.',target:'#dialogue-image-button',region:[.07,.40,.87,.42],dialogue:'ask',figure:'#dialogue-image-button'},
 
@@ -26,7 +26,7 @@ const steps=[
 
  {eyebrow:'REMEMBER',title:'Carry forward relevant findings.',desc:'Conversation takeaways remain organized for later analysis.',target:'#dialogue-image-button',region:[.145,.27,.71,.49],dialogue:'remember',figure:'#dialogue-image-button'},
 
- {eyebrow:'INCORPORATE',title:'The analyst makes the final decision.',desc:'Only approved information enters the living report.',target:'#dialogue-image-button',region:[.195,.811,.78,.165],dialogue:'incorporate',figure:'#dialogue-image-button'}
+ {eyebrow:'INCORPORATE',title:'The analyst makes the final decision.',desc:'Only approved information enters the living report.',target:'#dialogue-image-button',region:[.195,.811,.78,.165],arrow:{from:[.135,.72],to:[.25,.86],bend:[.06,-.025]},dialogue:'incorporate',figure:'#dialogue-image-button'}
 ];
 document.documentElement.dataset.cedarTourVersion='2.9.1';
 const layer=document.getElementById('tour-layer');
@@ -118,11 +118,18 @@ tourArrow.innerHTML = `
 layer.insertBefore(tourArrow, card);
 tourArrow.hidden=true; tourArrow.style.display='none';
 
+
+// CEDAR_TOUR_ARROWS_V33
+// Preserve Step 07's original curve.
+
 function drawTourArrow() {
   const step = steps[current];
+  const config = step.arrow;
 
-  tourArrow.hidden=!step.arrow; tourArrow.style.display=step.arrow?'block':'none';
-  if(!step.arrow)return;
+  tourArrow.hidden = !config;
+  tourArrow.style.display = config ? 'block' : 'none';
+
+  if (!config) return;
 
   const img = document.querySelector(step.target)
     ?.querySelector('img');
@@ -130,20 +137,38 @@ function drawTourArrow() {
   if (!img) return;
 
   const r = getImageArea(img);
+  if (!r) return;
 
-  const x1 = r.left + r.width * .56;
-  const y1 = r.top + r.height * .53;
-  const x2 = r.left + r.width * .56;
-  const y2 = r.top + r.height * .29;
+  const legacy = config === true;
+
+  const a = legacy ? [.56,.53] : config.from;
+  const b = legacy ? [.56,.29] : config.to;
+
+  const x1 = r.left + r.width * a[0];
+  const y1 = r.top + r.height * a[1];
+
+  const x2 = r.left + r.width * b[0];
+  const y2 = r.top + r.height * b[1];
+
+  const bend = legacy ? [0,0] : (config.bend || [0,0]);
+
+  const cx = legacy
+    ? x1 + 65
+    : (x1 + x2)/2 + r.width*bend[0];
+
+  const cy = legacy
+    ? (y1 + y2)/2
+    : (y1 + y2)/2 + r.height*bend[1];
 
   tourArrow.setAttribute(
-    'viewBox', `0 0 ${innerWidth} ${innerHeight}`
+    'viewBox',
+    `0 0 ${innerWidth} ${innerHeight}`
   );
 
   tourArrow.querySelector('#cedar-tour-arrow-path')
     .setAttribute(
       'd',
-      `M ${x1} ${y1} Q ${x1 + 65} ${(y1 + y2) / 2} ${x2} ${y2}`
+      `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`
     );
 }
 
