@@ -611,3 +611,210 @@ body.tour-active{scroll-behavior:auto}
   .demo-page .cedar-overview-link,
   .demo-page .cedar-overview-link .overview-arrow { transition: none; }
 }
+
+
+/* CEDAR_STUDENT_DIRECTORY_V31 */
+
+.cedar-students {
+  padding: 12px 0 84px;
+}
+
+.cedar-students-header {
+  border-top: 1px solid #b4cbb9;
+  padding: 29px 0 34px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cedar-students-kicker {
+  display: block;
+  margin-bottom: 14px;
+  font: 10px/1.5 var(--mono);
+  letter-spacing: .13em;
+  color: #59836c;
+}
+
+.cedar-students h2 {
+  margin: 0;
+  font: 500 clamp(30px,3.6vw,52px)/1.1 var(--sans);
+  letter-spacing: -.058em;
+  color: #1e3a30;
+}
+
+.cedar-students-headnote {
+  font: 10px/1.6 var(--mono);
+  color: #779181;
+  letter-spacing: .045em;
+  white-space: nowrap;
+}
+
+.cedar-student-institutions {
+  display: grid;
+  grid-template-columns: 1.3fr 1.3fr .72fr;
+  gap: clamp(20px,3vw,46px);
+  align-items: start;
+}
+
+.cedar-student-institution {
+  min-width: 0;
+}
+
+.cedar-student-institution + .cedar-student-institution {
+  border-left: 1px solid #d5e1d7;
+  padding-left: clamp(16px,2vw,29px);
+}
+
+.cedar-student-institution > h3 {
+  margin: 0 0 25px;
+  padding-top: 13px;
+  border-top: 1px solid #9dbba7;
+  color: #315744;
+  font: 600 13px/1.45 var(--sans);
+}
+
+.cedar-student-group {
+  margin-bottom: 30px;
+}
+
+.cedar-student-group-label {
+  margin: 0 0 16px;
+  font: 10px/1.5 var(--mono);
+  letter-spacing: .04em;
+  color: #718e7b;
+}
+
+.cedar-student-people {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 19px 12px;
+}
+
+.cedar-student-institution[data-campus="nyu"] .cedar-student-people {
+  grid-template-columns: 1fr;
+}
+
+.cedar-student-profile {
+  min-width: 0;
+  margin: 0;
+}
+
+.cedar-student-portrait {
+  display: block;
+  width: clamp(68px,6.4vw,88px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e2eae1;
+  outline: 1px solid #c7d6ca;
+  outline-offset: 3px;
+  transition: transform .2s,outline-color .2s;
+}
+
+.cedar-student-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 31%;
+  filter: saturate(.88);
+  transition: transform .25s;
+}
+
+.cedar-student-profile:hover .cedar-student-portrait {
+  outline-color: #438864;
+  transform: translateY(-2px);
+}
+
+.cedar-student-profile:hover img {
+  transform: scale(1.04);
+}
+
+.cedar-student-name {
+  display: inline-block;
+  margin-top: 12px;
+  font: 600 12px/1.42 var(--sans);
+  color: #2b4939;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.cedar-student-name:hover {
+  color: #20734f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cedar-student-name span {
+  color: #488464;
+}
+
+.cedar-student-portrait:focus-visible,
+.cedar-student-name:focus-visible {
+  outline: 2px solid #2f825b;
+  outline-offset: 4px;
+}
+
+@media(max-width:1030px) {
+  .cedar-student-institutions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cedar-student-institution[data-campus="nyu"] {
+    grid-column: 1/-1;
+    border: 0;
+    padding: 0;
+  }
+
+  .cedar-student-institution[data-campus="nyu"] .cedar-student-people {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:690px) {
+  .cedar-students {
+    padding-bottom: 45px;
+  }
+
+  .cedar-students-header {
+    display: block;
+  }
+
+  .cedar-students-headnote {
+    margin-top: 11px;
+  }
+
+  .cedar-student-institutions {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .cedar-student-institution,
+  .cedar-student-institution[data-campus="nyu"] {
+    grid-column: auto;
+    border: 0!important;
+    padding: 0!important;
+  }
+
+  .cedar-student-people {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+
+  .cedar-student-portrait {
+    width: 72px;
+  }
+}
+
+@media(max-width:370px) {
+  .cedar-student-people {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .cedar-student-portrait,
+  .cedar-student-portrait img {
+    transition: none;
+  }
+}
