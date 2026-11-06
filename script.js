@@ -28,7 +28,7 @@ function showCheckpoint(index){
  timelineButtons.forEach((b,i)=>{const active=i===index;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
  for(const [key,val] of [['story-id',x.id],['story-date',x.date],['story-title',x.title],['story-body',x.body]])document.getElementById(key).textContent=val;
  const image=document.querySelector('#checkpoint-figure img');const btn=document.getElementById('checkpoint-figure');
- if(image && btn){const file=`./assets/screenshots/hormuz_t${index}.webp`;image.src=file;image.alt=`CEDAR Living Report, Strait of Hormuz ${x.id} checkpoint, ${x.date}; report and supporting evidence.`;btn.dataset.fullImage=file;btn.dataset.caption=`CEDAR Living Report — original ${x.id} screenshot, ${x.date}.`;}
+ if(image && btn){const file=`./assets/screenshots/hormuz_t${index}.webp?v=20261105-hd`;image.src=file;image.alt=`CEDAR Living Report, Strait of Hormuz ${x.id} checkpoint, ${x.date}; report and supporting evidence.`;btn.dataset.fullImage=file;btn.dataset.caption=`CEDAR Living Report — original ${x.id} screenshot, ${x.date}.`;}
 }
 timelineButtons.forEach(b=>b.addEventListener('click',()=>showCheckpoint(Number(b.dataset.t))));
 showCheckpoint(4);
