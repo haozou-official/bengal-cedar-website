@@ -18,7 +18,7 @@ const steps=[
 
  {eyebrow:'VISUAL EVIDENCE',title:'Images provide context, not automatic proof.',desc:'Inspect the visual evidence panel and what it can establish.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
 
- {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.035,.855,.93,.115],dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
+ {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.03,.34,.94,.56],dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
 
  {eyebrow:'GROUNDED RESPONSE',title:'Read the assistant’s answer.',desc:'The response draws on the report and its cited evidence.',target:'#dialogue-image-button',region:[.07,.40,.87,.42],dialogue:'ask',figure:'#dialogue-image-button'},
 
