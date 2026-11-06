@@ -460,3 +460,50 @@ body.tour-active{scroll-behavior:auto}
 .cedar-tour-arrow[hidden] {
   display: none;
 }
+
+
+/* ===========================================
+   CEDAR TIMELINE IMAGE FIT 2026-11-05
+   =========================================== */
+
+/*
+ * Previous CSS forced a 2048/997 aspect ratio.
+ * New T0–T4 screenshots have different heights.
+ * Use their natural aspect ratios instead.
+ */
+
+.demo-page #checkpoint-figure img,
+.demo-page #overview-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    max-height: none;
+}
+
+/* Give the checkpoint screenshot more room. */
+
+@media (min-width: 901px) {
+
+    .demo-page .story-right {
+        padding: 18px 10px 21px;
+    }
+
+}
+
+/* Rebalance the desktop timeline columns. */
+
+@media (min-width: 1280px) {
+
+    .demo-page .story-workspace {
+        grid-template-columns:
+            315px minmax(0, 1fr);
+    }
+
+}
+
+/* ===========================================
+   END TIMELINE IMAGE FIT
+   =========================================== */
+
