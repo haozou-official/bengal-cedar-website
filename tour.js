@@ -12,9 +12,9 @@ const steps=[
 
  {eyebrow:'SOURCE INSPECTION',title:'Open the original evidence.',desc:'Read provenance, linked statements, and highlighted source text.',target:'.evidence-visual .image-button',region:[.035,.16,.93,.78],shot:'tour_hormuz_open.png',figure:'.evidence-visual .image-button'},
 
- {eyebrow:'BEYOND ENGLISH',title:'Sources are not limited to English.',desc:'An Arabic source appears beside the Ceuta report.',target:'.language-visual .image-button',region:[.585,.56,.38,.28],shot:'tour_ceuta_report.png',figure:'.language-visual .image-button'},
+ {eyebrow:'BEYOND ENGLISH',title:'Sources are not limited to English.',desc:'An Arabic source appears beside the Ceuta report.',target:'.language-visual .image-button',region:[.585,.78,.38,.16],shot:'tour_ceuta_report.png',figure:'.language-visual .image-button'},
 
- {eyebrow:'SOURCE TO SUMMARY',title:'Follow the multilingual evidence into the report.',desc:'The source remains linked to the specific statement it supports.',target:'.language-visual .image-button',region:[.035,.15,.93,.13],shot:'tour_ceuta_open.png',arrow:true,figure:'.language-visual .image-button'},
+ {eyebrow:'SOURCE TO SUMMARY',title:'Follow the multilingual evidence into the report.',desc:'The source remains linked to the specific statement it supports.',target:'.language-visual .image-button',region:[.035,.205,.93,.155],shot:'tour_ceuta_open.png',arrow:true,figure:'.language-visual .image-button'},
 
  {eyebrow:'VISUAL EVIDENCE',title:'Images provide context, not automatic proof.',desc:'Inspect the visual evidence panel and what it can establish.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
 
@@ -28,7 +28,7 @@ const steps=[
 
  {eyebrow:'INCORPORATE',title:'The analyst makes the final decision.',desc:'Only approved information enters the living report.',target:'#dialogue-image-button',region:[.195,.811,.78,.165],dialogue:'incorporate',figure:'#dialogue-image-button'}
 ];
-document.documentElement.dataset.cedarTourVersion='2.8.0';
+document.documentElement.dataset.cedarTourVersion='2.9.0';
 const layer=document.getElementById('tour-layer');
 const focus=document.getElementById('tour-focus');const ring=document.getElementById('tour-ring');const card=document.getElementById('tour-card');
 const count=document.getElementById('tour-count');const eyebrow=document.getElementById('tour-eyebrow');const heading=document.getElementById('tour-heading');const copy=document.getElementById('tour-copy');
@@ -46,6 +46,7 @@ function undoTourShot() {
   if (!activeTourShot) return;
 
   const {button, img, src, full, caption} = activeTourShot;
+  img.onload=null;
 
   img.src = src;
 
@@ -80,8 +81,7 @@ function setTourShot(step) {
 
   const path = './assets/screenshots/' + step.shot;
 
-  img.onload = () => {
-    if (running) {
+  img.onload=()=>{if(running && activeTourShot?.img===img && img.getAttribute('src')===path){
       scrollToStep();
       requestAnimationFrame(place);
     }
@@ -116,12 +116,13 @@ tourArrow.innerHTML = `
 `;
 
 layer.insertBefore(tourArrow, card);
+tourArrow.hidden=true; tourArrow.style.display='none';
 
 function drawTourArrow() {
   const step = steps[current];
 
-  tourArrow.hidden = !step.arrow;
-  if (!step.arrow) return;
+  tourArrow.hidden=!step.arrow; tourArrow.style.display=step.arrow?'block':'none';
+  if(!step.arrow)return;
 
   const img = document.querySelector(step.target)
     ?.querySelector('img');
@@ -205,6 +206,8 @@ function scrollToStep(){
  setTimeout(place,prefersReduced?90:820);
 }
 function showStep(i){if(!running)return;current=Math.max(0,Math.min(steps.length-1,i));const step=steps[current];token++;
+ tourArrow.hidden=!step.arrow;
+ tourArrow.style.display=step.arrow?'block':'none';
  if(step.checkpoint!==undefined && typeof showCheckpoint==='function')showCheckpoint(step.checkpoint);
  undoTourShot();
  if(step.dialogue && typeof setDialogue==='function')setDialogue(step.dialogue);
@@ -214,7 +217,7 @@ function showStep(i){if(!running)return;current=Math.max(0,Math.min(steps.length
  scrollToStep();requestAnimationFrame(()=>{place();card.focus({preventScroll:true})});
 }
 function startTour(){if(running)return;previousFocus=document.activeElement;running=true;layer.hidden=false;layer.setAttribute('aria-hidden','false');restart.hidden=true;document.body.classList.add('tour-active');history.replaceState(null,'',location.pathname+location.search+'#tour');showStep(0);}
-function endTour(){if(!running)return;running=false;undoTourShot();tourArrow.hidden=true;layer.hidden=true;layer.setAttribute('aria-hidden','true');restart.hidden=false;document.body.classList.remove('tour-active');if(location.hash==='#tour')history.replaceState(null,'',location.pathname+location.search);(previousFocus?.isConnected?previousFocus:restart).focus({preventScroll:true});}
+function endTour(){if(!running)return;running=false;undoTourShot();tourArrow.hidden=true;tourArrow.style.display='none';layer.hidden=true;layer.setAttribute('aria-hidden','true');restart.hidden=false;document.body.classList.remove('tour-active');if(location.hash==='#tour')history.replaceState(null,'',location.pathname+location.search);(previousFocus?.isConnected?previousFocus:restart).focus({preventScroll:true});}
 function openFigure(){const button=document.querySelector(steps[current].figure);if(!button)return;const dialog=document.getElementById('image-dialog');const large=document.getElementById('dialog-large-image');const src=button.dataset.fullImage||button.querySelector('img')?.src;if(!src)return;large.src=src;large.alt=button.querySelector('img')?.alt||'';document.getElementById('dialog-caption').textContent=button.dataset.caption||stepCaption();if(!dialog.open)dialog.showModal();}
 function stepCaption(){return `${steps[current].title} — original CEDAR demonstration screenshot.`}
 document.getElementById('tour-start').addEventListener('click',startTour);
