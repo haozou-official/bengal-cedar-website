@@ -305,3 +305,83 @@ body.tour-active{scroll-behavior:auto}
     font-size:12px;
   }
 }
+
+
+/* =========================================
+   CEDAR v2.6 — Expanded Demonstration
+   ========================================= */
+
+/* Allow the Demo to use the available screen width.
+   Research homepage remains unchanged. */
+
+@media (min-width: 960px) {
+
+  .demo-page .page-width {
+    width: min(calc(100% - 32px), 1920px);
+  }
+
+  /* Give screenshots more space than explanations. */
+
+  .demo-page .dialogue-body {
+    grid-template-columns:
+      minmax(235px, 0.48fr)
+      minmax(0, 1.52fr);
+
+    gap: clamp(20px, 2.8vw, 48px);
+    padding: clamp(20px, 2.2vw, 36px);
+    min-height: 0;
+  }
+
+}
+
+/* Remove unnecessary side borders. */
+
+.demo-page .dialogue-module {
+  border-left: 0;
+  border-right: 0;
+  box-shadow: none;
+}
+
+.demo-page .opening-visual {
+  border-left: 0;
+  border-right: 0;
+}
+
+/* Allow screenshots to expand naturally.
+   Do not crop or artificially stretch images. */
+
+.demo-page .dialogue-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.demo-page .dialogue-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Maintain a simple stacked layout on smaller screens. */
+
+@media (max-width: 959px) {
+
+  .demo-page .dialogue-body {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =========================================
+   End of CEDAR v2.6
+   ========================================= */

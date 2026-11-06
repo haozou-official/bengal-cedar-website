@@ -78,4 +78,39 @@ document.addEventListener('keydown',e=>{if(!running || document.getElementById('
   const eligible=[skip,imageLink,prev,next].filter(n=>!n.disabled),pos=eligible.indexOf(document.activeElement);if(!e.shiftKey&&pos===eligible.length-1){e.preventDefault();eligible[0].focus()}else if(e.shiftKey&&(pos<=0)){e.preventDefault();eligible[eligible.length-1].focus()}
  }
 });
-// No forced onboarding; user explicitly opts into the tour.
+
+// CEDAR v2.6 — Guided Tour starts automatically.
+//
+// Direct section links (#report, #dialogue, etc.)
+// remain accessible without interrupting navigation.
+//
+// Visitors may skip at any time and explore freely.
+
+function autoStartTourOnEntry() {
+
+  if (location.hash && location.hash !== '#tour') {
+    return;
+  }
+
+  window.setTimeout(() => {
+    if (!running) {
+      startTour();
+    }
+  }, 450);
+
+}
+
+if (document.readyState === 'loading') {
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    autoStartTourOnEntry,
+    { once: true }
+  );
+
+} else {
+
+  autoStartTourOnEntry();
+
+}
+
