@@ -507,3 +507,107 @@ body.tour-active{scroll-behavior:auto}
    END TIMELINE IMAGE FIT
    =========================================== */
 
+
+
+/* CEDAR_OVERVIEW_V30 — editorial, three-group overview navigator */
+.demo-page .demo-intro-grid {
+  grid-template-columns: minmax(0,1fr) minmax(340px, min(38vw, 465px));
+  align-items: start;
+  gap: clamp(30px, 4.5vw, 74px);
+  padding: 42px 0 40px;
+}
+.demo-page .demo-intro-lead { min-width: 0; padding-top: clamp(12px,4.5vw,64px); }
+.demo-page .demo-intro-lead h1 {
+  font-size: clamp(48px, 4.85vw, 82px);
+  line-height: 1.055;
+  letter-spacing: -.066em;
+}
+.demo-page .demo-intro-lead > p { max-width: 440px; margin-top: 21px; }
+.demo-page .cedar-overview {
+  padding: 0; margin: 0; border: 0; min-width: 0;
+  display: block; align-self: stretch;
+}
+.demo-page .cedar-overview .demo-guide-meta {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin: 0 0 14px; padding: 0 0 12px;
+  border-bottom: 1px solid #b9cabe;
+}
+.demo-page .cedar-overview .demo-guide-meta span {
+  font: 500 10px/1.4 var(--mono); color: #527963; letter-spacing: .095em;
+}
+.demo-page .cedar-overview .demo-guide-meta span:last-child { color: #809888; }
+.demo-page .cedar-overview-groups { display: grid; gap: 9px; }
+.demo-page .cedar-overview-group {
+  --overview-bg: #e5eee6; --overview-rule: #bfcec2; --overview-accent: #2b7353;
+  position: relative; padding: 10px 13px 5px 17px;
+  background: var(--overview-bg); border: 1px solid var(--overview-rule);
+}
+.demo-page .cedar-overview-group::before {
+  content: ''; position: absolute; inset: -1px auto -1px -1px;
+  width: 3px; background: var(--overview-accent);
+}
+.demo-page .cedar-overview--visual {
+  --overview-bg: #e8efef; --overview-rule: #c5d5d4; --overview-accent: #547e88;
+}
+.demo-page .cedar-overview--analyst {
+  --overview-bg: #efeee7; --overview-rule: #d6d2c5; --overview-accent: #8a815e;
+}
+.demo-page .cedar-overview-group-head {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 2px 2px 8px;
+}
+.demo-page .cedar-overview-group-head span {
+  font: 500 9px/1.45 var(--mono); letter-spacing: .075em;
+  color: #587366;
+}
+.demo-page .cedar-overview-link {
+  display: grid; grid-template-columns: 32px minmax(0,1fr) 20px;
+  align-items: center; gap: 7px; min-height: 41px;
+  padding: 8px 6px 8px 3px; color: #234436;
+  border-top: 1px solid rgba(68,106,79,.15);
+  transition: background .18s ease, color .18s ease;
+}
+.demo-page .cedar-overview-link .overview-number {
+  font: 10px/1.2 var(--mono); color: #63836d;
+}
+.demo-page .cedar-overview-link .overview-title {
+  font: 600 15px/1.27 var(--sans); letter-spacing: -.02em;
+}
+.demo-page .cedar-overview-link .overview-arrow {
+  font: 21px/1 var(--serif); justify-self: end;
+  transition: transform .18s ease;
+}
+.demo-page .cedar-overview-link:hover,
+.demo-page .cedar-overview-link:focus-visible,
+.demo-page .cedar-overview-link.is-current {
+  background: rgba(255,255,255,.61); color: #14523a;
+}
+.demo-page .cedar-overview-link:hover .overview-arrow,
+.demo-page .cedar-overview-link:focus-visible .overview-arrow {
+  transform: translate(2px,-2px);
+}
+.demo-page .cedar-overview-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 13px;
+  font: 10px/1.4 var(--mono); color: #718b79; letter-spacing: .05em;
+}
+.demo-page .cedar-overview-foot span { font: 18px/1 var(--serif); }
+@media (max-width: 1100px) {
+  .demo-page .demo-intro-grid { grid-template-columns: 1fr; gap: 28px; padding-top: 30px; }
+  .demo-page .demo-intro-lead { padding-top: 0; }
+  .demo-page .cedar-overview { padding: 0; margin: 0; border: 0; }
+  .demo-page .cedar-overview-groups { grid-template-columns: 1.35fr .9fr 1.15fr; gap: 10px; }
+  .demo-page .cedar-overview-group { padding: 9px 10px 4px 13px; }
+  .demo-page .cedar-overview-link { grid-template-columns: 25px minmax(0,1fr) 16px; gap: 4px; }
+  .demo-page .cedar-overview-link .overview-title { font-size: 13px; }
+}
+@media (max-width: 700px) {
+  .demo-page .cedar-overview-groups { grid-template-columns: 1fr; }
+  .demo-page .demo-intro-lead h1 { font-size: clamp(41px, 9.3vw, 65px); }
+  .demo-page .cedar-overview-link .overview-title { font-size: 15px; }
+  .demo-page .cedar-overview-group { padding: 10px 13px 5px 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-page .cedar-overview-link,
+  .demo-page .cedar-overview-link .overview-arrow { transition: none; }
+}

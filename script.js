@@ -54,6 +54,48 @@ function setDialogue(key){const d=dialogueFrames[key];if(!d)return;
 }
 dialogueTabs.forEach(btn=>{btn.addEventListener('click',()=>setDialogue(btn.dataset.panel));btn.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;e.preventDefault();const curr=order.indexOf(btn.dataset.panel);const dest=e.key==='Home'?0:e.key==='End'?3:(curr+(e.key==='ArrowRight'?1:3))%4;setDialogue(order[dest]);dialogueTabs[dest].focus();});});setDialogue('ask');
 
+// CEDAR_OVERVIEW_V30 — overview navigation and analyst-memory deep link
+const cedarOverviewLinks = [...document.querySelectorAll('.cedar-overview-link')];
+const cedarOverviewSections = ['report','evidence','languages','visuals','dialogue']
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
+let cedarOverviewTicking = false;
+function cedarUpdateOverviewCurrent() {
+  cedarOverviewTicking = false;
+  if (document.body.classList.contains('tour-active')) return;
+  const threshold = window.innerHeight * 0.4;
+  let section = null;
+  for (const el of cedarOverviewSections) {
+    if (el.getBoundingClientRect().top <= threshold) section = el.id;
+  }
+  const currentTab = document.querySelector('.dialogue-tab.active')?.dataset.panel;
+  for (const link of cedarOverviewLinks) {
+    const isCurrent = link.dataset.overviewTarget === section &&
+      (section !== 'dialogue' || link.dataset.dialogue ===
+        (currentTab === 'remember' ? 'remember' : 'ask'));
+    link.classList.toggle('is-current', isCurrent);
+    if (isCurrent) link.setAttribute('aria-current','location');
+    else link.removeAttribute('aria-current');
+  }
+}
+function cedarScheduleOverviewCurrent() {
+  if (cedarOverviewTicking) return;
+  cedarOverviewTicking = true;
+  requestAnimationFrame(cedarUpdateOverviewCurrent);
+}
+for (const link of cedarOverviewLinks) {
+  link.addEventListener('click', () => {
+    if (link.dataset.dialogue) setDialogue(link.dataset.dialogue);
+    cedarScheduleOverviewCurrent();
+  });
+}
+for (const tab of dialogueTabs) tab.addEventListener('click', cedarScheduleOverviewCurrent);
+window.addEventListener('scroll', cedarScheduleOverviewCurrent, {passive:true});
+window.addEventListener('resize', cedarScheduleOverviewCurrent, {passive:true});
+window.addEventListener('hashchange', cedarScheduleOverviewCurrent);
+cedarScheduleOverviewCurrent();
+
+
 const imageDialog=document.getElementById('image-dialog');
 const largeImg=document.getElementById('dialog-large-image');
 document.querySelectorAll('[data-full-image]').forEach(b=>b.addEventListener('click',()=>{largeImg.src=b.dataset.fullImage;largeImg.alt=b.querySelector('img')?.alt||'';document.getElementById('dialog-caption').textContent=b.dataset.caption||'';if(typeof imageDialog.showModal==='function')imageDialog.showModal();}));

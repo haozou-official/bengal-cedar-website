@@ -221,7 +221,7 @@ function endTour(){if(!running)return;running=false;undoTourShot();tourArrow.hid
 function openFigure(){const button=document.querySelector(steps[current].figure);if(!button)return;const dialog=document.getElementById('image-dialog');const large=document.getElementById('dialog-large-image');const src=button.dataset.fullImage||button.querySelector('img')?.src;if(!src)return;large.src=src;large.alt=button.querySelector('img')?.alt||'';document.getElementById('dialog-caption').textContent=button.dataset.caption||stepCaption();if(!dialog.open)dialog.showModal();}
 function stepCaption(){return `${steps[current].title} — original CEDAR demonstration screenshot.`}
 document.getElementById('tour-start').addEventListener('click',startTour);
-document.getElementById('tour-again').addEventListener('click',startTour);
+document.getElementById('tour-again')?.addEventListener('click',startTour);
 restart.addEventListener('click',startTour);skip.addEventListener('click',endTour);prev.addEventListener('click',()=>showStep(current-1));next.addEventListener('click',()=>current===steps.length-1?endTour():showStep(current+1));imageLink.addEventListener('click',openFigure);
 window.addEventListener('scroll',()=>{if(running){cancelAnimationFrame(positionFrame);positionFrame=requestAnimationFrame(place)}},{passive:true});window.addEventListener('resize',()=>{if(running)requestAnimationFrame(place)},{passive:true});
 document.addEventListener('keydown',e=>{if(!running || document.getElementById('image-dialog')?.open)return;
