@@ -1,3 +1,4 @@
+// CEDAR_KATHY_FINAL_REFINEMENT_V34
 'use strict';
 // DOM-anchored guided tour. Spotlight coordinates are measured from real screenshot containers.
 // It never pretends that the snapshots are a live interactive model endpoint.
@@ -6,7 +7,7 @@ const steps=[
 
  {eyebrow:'REPLAY TIMELINE',title:'Five dates. One evolving report.',desc:'Use T0–T4 to revisit the report as evidence arrives.',target:'.timeline-list',region:[.03,.02,.94,.95],checkpoint:2,figure:'#checkpoint-figure'},
 
- {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T4, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.145,.34,.345,.30],arrow:{from:[.39,.525],to:[.38,.37],bend:[.105,0]},checkpoint:4,figure:'#checkpoint-figure'},
+ {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T4, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.015,.065,.97,.84],arrow:{from:[.88,.73],to:[.83,.26],bend:[.12,0]},checkpoint:4,shot:'tour_hormuz_update_zoom.jpg',fullShot:'tour_hormuz_t4_full.webp',figure:'#checkpoint-figure'},
 
  {eyebrow:'SOURCE LIST',title:'Browse the evidence.',desc:'Each checkpoint has a source list analysts can inspect.',target:'.evidence-visual .image-button',region:[.04,.15,.92,.75],shot:'tour_hormuz_list.png',figure:'.evidence-visual .image-button'},
 
@@ -18,13 +19,13 @@ const steps=[
 
  {eyebrow:'VISUAL EVIDENCE',title:'We also support multimodal evidence.',desc:'Inspect the visual evidence panel and what it can establish.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
 
- {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.03,.34,.94,.56],arrow:{from:[.745,.74],to:[.36,.875],bend:[.035,-.09]},dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
+ {eyebrow:'ASK',title:'The analyst can ask questions about the report.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.03,.34,.94,.56],arrow:{from:[.745,.74],to:[.36,.875],bend:[.035,-.09]},dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
 
  {eyebrow:'GROUNDED RESPONSE',title:'Read the assistant’s answer.',desc:'The response draws on the report and its cited evidence.',target:'#dialogue-image-button',region:[.07,.40,.87,.42],dialogue:'ask',figure:'#dialogue-image-button'},
 
  {eyebrow:'REVIEW THE ANSWER',title:'Inspect evidence and conflicting claims.',desc:'Review the response check, confidence warning, and evidence support.',target:'#dialogue-image-button',region:[.055,.30,.89,.44],dialogue:'review',figure:'#dialogue-image-button'},
 
- {eyebrow:'REMEMBER',title:'Carry forward relevant findings.',desc:'Conversation takeaways remain organized for later analysis.',target:'#dialogue-image-button',region:[.145,.27,.71,.49],dialogue:'remember',figure:'#dialogue-image-button'},
+ {eyebrow:'REMEMBER',title:'Carry forward relevant findings.',desc:'Conversation takeaways remain organized for later analysis. The analyst can add takeaways to the report by checking the box.',target:'#dialogue-image-button',region:[.145,.27,.71,.49],dialogue:'remember',figure:'#dialogue-image-button'},
 
  {eyebrow:'INCORPORATE',title:'The analyst makes the final decision.',desc:'Only approved information enters the living report.',target:'#dialogue-image-button',region:[.195,.811,.78,.165],arrow:{from:[.135,.72],to:[.25,.86],bend:[.06,-.025]},dialogue:'incorporate',figure:'#dialogue-image-button'}
 ];
@@ -88,7 +89,7 @@ function setTourShot(step) {
   };
 
   img.src = path;
-  button.dataset.fullImage = path;
+  button.dataset.fullImage = step.fullShot ? './assets/screenshots/' + step.fullShot : path;
   button.dataset.caption =
     step.title + ' — CEDAR demonstration capture.';
 }
@@ -242,7 +243,7 @@ function showStep(i){if(!running)return;current=Math.max(0,Math.min(steps.length
  scrollToStep();requestAnimationFrame(()=>{place();card.focus({preventScroll:true})});
 }
 function startTour(){if(running)return;previousFocus=document.activeElement;running=true;layer.hidden=false;layer.setAttribute('aria-hidden','false');restart.hidden=true;document.body.classList.add('tour-active');history.replaceState(null,'',location.pathname+location.search+'#tour');showStep(0);}
-function endTour(){if(!running)return;running=false;undoTourShot();tourArrow.hidden=true;tourArrow.style.display='none';layer.hidden=true;layer.setAttribute('aria-hidden','true');restart.hidden=false;document.body.classList.remove('tour-active');if(location.hash==='#tour')history.replaceState(null,'',location.pathname+location.search);(previousFocus?.isConnected?previousFocus:restart).focus({preventScroll:true});}
+function endTour(){if(!running)return;running=false;undoTourShot();tourArrow.hidden=true;tourArrow.style.display='none';layer.hidden=true;layer.setAttribute('aria-hidden','true');restart.hidden=false;document.body.classList.remove('tour-active');history.replaceState(null,'',location.pathname+location.search+'#overview');requestAnimationFrame(()=>{document.querySelector('.demo-actions')?.scrollIntoView({behavior:prefersReduced?'auto':'smooth',block:'center'});(document.getElementById('tour-start')||restart).focus({preventScroll:true});});}
 function openFigure(){const button=document.querySelector(steps[current].figure);if(!button)return;const dialog=document.getElementById('image-dialog');const large=document.getElementById('dialog-large-image');const src=button.dataset.fullImage||button.querySelector('img')?.src;if(!src)return;large.src=src;large.alt=button.querySelector('img')?.alt||'';document.getElementById('dialog-caption').textContent=button.dataset.caption||stepCaption();if(!dialog.open)dialog.showModal();}
 function stepCaption(){return `${steps[current].title} — original CEDAR demonstration screenshot.`}
 document.getElementById('tour-start').addEventListener('click',startTour);
