@@ -7,7 +7,7 @@ const steps=[
 
  {eyebrow:'REPLAY TIMELINE',title:'Five dates. One evolving report.',desc:'Use T0–T4 to revisit the report as evidence arrives.',target:'.timeline-list',region:[.03,.02,.94,.95],checkpoint:2,figure:'#checkpoint-figure'},
 
- {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T4, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.015,.065,.97,.84],arrow:{from:[.88,.73],to:[.83,.26],bend:[.12,0]},checkpoint:4,shot:'tour_hormuz_update_zoom.jpg',fullShot:'tour_hormuz_t4_full.webp',figure:'#checkpoint-figure'},
+ {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T3, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.01,.01,.98,.98],arrow:{from:[.88,.73],to:[.83,.26],bend:[.12,0]},checkpoint:3,shot:'tour_hormuz_update_crisp.png',fullShot:'tour_hormuz_update_crisp.png',figure:'#checkpoint-figure'},
 
  {eyebrow:'SOURCE LIST',title:'Browse the evidence.',desc:'Each checkpoint has a source list analysts can inspect.',target:'.evidence-visual .image-button',region:[.04,.15,.92,.75],shot:'tour_hormuz_list.png',figure:'.evidence-visual .image-button'},
 
