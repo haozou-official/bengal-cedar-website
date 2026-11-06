@@ -445,3 +445,18 @@ body.tour-active{scroll-behavior:auto}
 
 /* End CEDAR v2.7 */
 
+
+/* CEDAR v2.8 — focused guided tour */
+.cedar-tour-arrow {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 959;
+  filter: drop-shadow(0 2px 3px #001b13);
+}
+
+.cedar-tour-arrow[hidden] {
+  display: none;
+}

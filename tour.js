@@ -2,18 +2,33 @@
 // DOM-anchored guided tour. Spotlight coordinates are measured from real screenshot containers.
 // It never pretends that the snapshots are a live interactive model endpoint.
 const steps=[
- {eyebrow:'THE LIVING REPORT',title:'A report that stays current.',desc:'One evolving report, with the evidence beside it.',target:'#overview-figure',region:[.015,.16,.97,.72],figure:'#overview-figure .image-button'},
- {eyebrow:'EVOLVING TIMELINE',title:'Five dates. One report.',desc:'This is March 10 (T2). Move between T0 and T4 to see the report respond to new evidence.',target:'.timeline-list',region:[0,.01,1,.98],checkpoint:2,figure:'#checkpoint-figure'},
- {eyebrow:'SELECTIVE REVISION',title:'Change only what needs changing.',desc:'At T4, blue shows new wording and red shows what it replaces. Supported claims remain.',target:'#checkpoint-figure',region:[.12,.29,.47,.59],checkpoint:4,figure:'#checkpoint-figure'},
- {eyebrow:'TRACEABLE SOURCES',title:'Follow the evidence.',desc:'Inspect the source article and the passage behind a claim.',target:'.evidence-visual .image-button',region:[.18,.13,.65,.76],figure:'.evidence-visual .image-button'},
- {eyebrow:'MULTILINGUAL REPORTING',title:'Read beyond English.',desc:'Keep Arabic-language evidence linked to the English report.',target:'.language-visual .image-button',region:[.05,.1,.9,.8],figure:'.language-visual .image-button'},
- {eyebrow:'VISUAL EVIDENCE',title:'See the context—and its limits.',desc:'Review related images without treating them as proof of every claim.',target:'.visual-panel-main .image-button',region:[.08,.1,.84,.8],figure:'.visual-panel-main .image-button'},
- {eyebrow:'ASK',title:'Ask the report.',desc:'Explore a question about the event and its implications.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'ask',figure:'#dialogue-image-button'},
- {eyebrow:'REVIEW',title:'Inspect the answer.',desc:'Check flagged claims against the available evidence.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'review',figure:'#dialogue-image-button'},
- {eyebrow:'REMEMBER',title:'Keep useful context.',desc:'Bring relevant conversation takeaways into later analysis.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'remember',figure:'#dialogue-image-button'},
- {eyebrow:'INCORPORATE',title:'The analyst decides.',desc:'Add a reviewed finding to the report only when the analyst approves.',target:'#dialogue-image-button',region:[.08,.07,.84,.86],dialogue:'incorporate',figure:'#dialogue-image-button'}
+ {eyebrow:'LIVING REPORT',title:'One report, connected to its evidence.',desc:'See the evolving report alongside its source material.',target:'#overview-figure',region:[.09,.32,.81,.52],figure:'#overview-figure .image-button'},
+
+ {eyebrow:'REPLAY TIMELINE',title:'Five dates. One evolving report.',desc:'Use T0–T4 to revisit the report as evidence arrives.',target:'.timeline-list',region:[.03,.02,.94,.95],checkpoint:2,figure:'#checkpoint-figure'},
+
+ {eyebrow:'SELECTIVE REVISION',title:'Update only what needs to change.',desc:'At T4, blue marks new wording; red marks what it replaced.',target:'#checkpoint-figure',region:[.145,.34,.345,.30],checkpoint:4,figure:'#checkpoint-figure'},
+
+ {eyebrow:'SOURCE LIST',title:'Browse the evidence.',desc:'Each checkpoint has a source list analysts can inspect.',target:'.evidence-visual .image-button',region:[.04,.15,.92,.75],shot:'tour_hormuz_list.png',figure:'.evidence-visual .image-button'},
+
+ {eyebrow:'SOURCE INSPECTION',title:'Open the original evidence.',desc:'Read provenance, linked statements, and highlighted source text.',target:'.evidence-visual .image-button',region:[.035,.16,.93,.78],shot:'tour_hormuz_open.png',figure:'.evidence-visual .image-button'},
+
+ {eyebrow:'BEYOND ENGLISH',title:'Sources are not limited to English.',desc:'An Arabic source appears beside the Ceuta report.',target:'.language-visual .image-button',region:[.585,.56,.38,.28],shot:'tour_ceuta_report.png',figure:'.language-visual .image-button'},
+
+ {eyebrow:'SOURCE TO SUMMARY',title:'Follow the multilingual evidence into the report.',desc:'The source remains linked to the specific statement it supports.',target:'.language-visual .image-button',region:[.035,.15,.93,.13],shot:'tour_ceuta_open.png',arrow:true,figure:'.language-visual .image-button'},
+
+ {eyebrow:'VISUAL EVIDENCE',title:'Images provide context, not automatic proof.',desc:'Inspect the visual evidence panel and what it can establish.',target:'.visual-panel-main .image-button',region:[.585,.27,.38,.61],figure:'.visual-panel-main .image-button'},
+
+ {eyebrow:'ASK',title:'Begin with a question.',desc:'The analyst types a question before requesting an answer.',target:'#dialogue-image-button',region:[.035,.855,.93,.115],dialogue:'ask',shot:'tour_ask_typed.png',figure:'#dialogue-image-button'},
+
+ {eyebrow:'GROUNDED RESPONSE',title:'Read the assistant’s answer.',desc:'The response draws on the report and its cited evidence.',target:'#dialogue-image-button',region:[.07,.40,.87,.42],dialogue:'ask',figure:'#dialogue-image-button'},
+
+ {eyebrow:'REVIEW THE ANSWER',title:'Inspect evidence and conflicting claims.',desc:'Review the response check, confidence warning, and evidence support.',target:'#dialogue-image-button',region:[.055,.30,.89,.44],dialogue:'review',figure:'#dialogue-image-button'},
+
+ {eyebrow:'REMEMBER',title:'Carry forward relevant findings.',desc:'Conversation takeaways remain organized for later analysis.',target:'#dialogue-image-button',region:[.145,.27,.71,.49],dialogue:'remember',figure:'#dialogue-image-button'},
+
+ {eyebrow:'INCORPORATE',title:'The analyst makes the final decision.',desc:'Only approved information enters the living report.',target:'#dialogue-image-button',region:[.195,.811,.78,.165],dialogue:'incorporate',figure:'#dialogue-image-button'}
 ];
-document.documentElement.dataset.cedarTourVersion='2.4.0';
+document.documentElement.dataset.cedarTourVersion='2.8.0';
 const layer=document.getElementById('tour-layer');
 const focus=document.getElementById('tour-focus');const ring=document.getElementById('tour-ring');const card=document.getElementById('tour-card');
 const count=document.getElementById('tour-count');const eyebrow=document.getElementById('tour-eyebrow');const heading=document.getElementById('tour-heading');const copy=document.getElementById('tour-copy');
@@ -21,6 +36,116 @@ const prev=document.getElementById('tour-prev');const next=document.getElementBy
 const restart=document.getElementById('tour-restart');
 let running=false,current=0,positionFrame=0,token=0,lastFocus=null,previousFocus=null;
 const prefersReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// CEDAR_FOCUSED_TOUR_V28
+// Restore normal screenshots when the tour is skipped.
+
+let activeTourShot = null;
+
+function undoTourShot() {
+  if (!activeTourShot) return;
+
+  const {button, img, src, full, caption} = activeTourShot;
+
+  img.src = src;
+
+  if (full === null)
+    button.removeAttribute('data-full-image');
+  else
+    button.setAttribute('data-full-image', full);
+
+  if (caption === null)
+    button.removeAttribute('data-caption');
+  else
+    button.setAttribute('data-caption', caption);
+
+  activeTourShot = null;
+}
+
+function setTourShot(step) {
+  if (!step.shot) return;
+
+  const button = document.querySelector(step.target);
+  const img = button?.querySelector('img');
+
+  if (!button || !img) return;
+
+  activeTourShot = {
+    button,
+    img,
+    src: img.getAttribute('src'),
+    full: button.getAttribute('data-full-image'),
+    caption: button.getAttribute('data-caption')
+  };
+
+  const path = './assets/screenshots/' + step.shot;
+
+  img.onload = () => {
+    if (running) {
+      scrollToStep();
+      requestAnimationFrame(place);
+    }
+  };
+
+  img.src = path;
+  button.dataset.fullImage = path;
+  button.dataset.caption =
+    step.title + ' — CEDAR demonstration capture.';
+}
+
+// Evidence-to-summary directional arrow.
+const tourArrow = document.createElementNS(
+  'http://www.w3.org/2000/svg', 'svg'
+);
+
+tourArrow.classList.add('cedar-tour-arrow');
+tourArrow.setAttribute('aria-hidden', 'true');
+
+tourArrow.innerHTML = `
+<defs>
+  <marker id="cedar-arrow-tip" markerWidth="7"
+    markerHeight="7" refX="5" refY="3.5" orient="auto">
+    <path d="M0 0 L7 3.5 L0 7"
+      fill="none" stroke="#e6fff1" stroke-width="1.6"/>
+  </marker>
+</defs>
+<path id="cedar-tour-arrow-path"
+  fill="none" stroke="#e6fff1" stroke-width="3"
+  stroke-linecap="round"
+  marker-end="url(#cedar-arrow-tip)"/>
+`;
+
+layer.insertBefore(tourArrow, card);
+
+function drawTourArrow() {
+  const step = steps[current];
+
+  tourArrow.hidden = !step.arrow;
+  if (!step.arrow) return;
+
+  const img = document.querySelector(step.target)
+    ?.querySelector('img');
+
+  if (!img) return;
+
+  const r = getImageArea(img);
+
+  const x1 = r.left + r.width * .56;
+  const y1 = r.top + r.height * .53;
+  const x2 = r.left + r.width * .56;
+  const y2 = r.top + r.height * .29;
+
+  tourArrow.setAttribute(
+    'viewBox', `0 0 ${innerWidth} ${innerHeight}`
+  );
+
+  tourArrow.querySelector('#cedar-tour-arrow-path')
+    .setAttribute(
+      'd',
+      `M ${x1} ${y1} Q ${x1 + 65} ${(y1 + y2) / 2} ${x2} ${y2}`
+    );
+}
+
 const imageLink=document.createElement('button');imageLink.type='button';imageLink.className='tour-full';imageLink.textContent='View full screenshot ↗';copy.after(imageLink);
 steps.forEach((_,i)=>{const d=document.createElement('span');d.className='tour-dot';d.setAttribute('aria-hidden','true');dots.appendChild(d)});
 function getImageArea(node){
@@ -40,7 +165,7 @@ function computeRect(){const step=steps[current],target=document.querySelector(s
  const pad=5;l=Math.max(6,l-pad);t=Math.max(6,t-pad);ww=Math.min(innerWidth-l-6,ww+pad*2);hh=Math.min(innerHeight-t-8,hh+pad*2);
  if(ww<25||hh<25)return null;return {l,t,w:ww,h:hh};}
 function geometry(el,r){for(const [k,v] of Object.entries({left:r.l+'px',top:r.t+'px',width:r.w+'px',height:r.h+'px'}))el.style[k]=v;}
-function place(){if(!running)return;const r=computeRect();if(!r)return;lastFocus=r;geometry(focus,r);geometry(ring,r);
+function place(){if(!running)return;const r=computeRect();if(!r)return;lastFocus=r;geometry(focus,r);geometry(ring,r);drawTourArrow();
  if(innerWidth<=640)return;
  const W=Math.min(360,innerWidth-28),H=card.offsetHeight||270,margin=20,gap=22;
  const candidates=[
@@ -53,20 +178,43 @@ function place(){if(!running)return;const r=computeRect();if(!r)return;lastFocus
  if(!chosen){let x=r.l+r.w/2>innerWidth/2?margin:innerWidth-W-margin;let y=Math.min(innerHeight-H-12,Math.max(12,r.t+r.h/2-H/2));chosen={x,y}}
  card.style.left=chosen.x+'px';card.style.top=chosen.y+'px';card.style.bottom='auto';
 }
-function scrollToStep(){const node=document.querySelector(steps[current].target);if(!node)return;const anchor=node;
- const rect=node.getBoundingClientRect();if(rect.top>95&&rect.bottom<innerHeight-(innerWidth<=640?330:45)){requestAnimationFrame(place);return}
- anchor.scrollIntoView({behavior:prefersReduced?'instant':'smooth',block:innerWidth<=640?'start':'center'});
- setTimeout(place,prefersReduced?50:360);setTimeout(place,prefersReduced?100:720);
+function scrollToStep(){
+ const step=steps[current];
+ const node=document.querySelector(step.target);
+ if(!node)return;
+
+ const r=getImageArea(node);
+ if(!r)return;
+
+ const [x,y,w,h]=step.region||[0,0,1,1];
+ const cy=r.top+r.height*(y+h/2);
+
+ const desired=innerWidth<=640
+   ? innerHeight*.29
+   : innerHeight*.46;
+
+ const delta=cy-desired;
+
+ if(Math.abs(delta)>25)
+   window.scrollBy({
+     top:delta,
+     behavior:prefersReduced?'instant':'smooth'
+   });
+
+ setTimeout(place,prefersReduced?40:400);
+ setTimeout(place,prefersReduced?90:820);
 }
 function showStep(i){if(!running)return;current=Math.max(0,Math.min(steps.length-1,i));const step=steps[current];token++;
  if(step.checkpoint!==undefined && typeof showCheckpoint==='function')showCheckpoint(step.checkpoint);
+ undoTourShot();
  if(step.dialogue && typeof setDialogue==='function')setDialogue(step.dialogue);
+ setTourShot(step);
  count.textContent=String(current+1).padStart(2,'0')+' / '+String(steps.length).padStart(2,'0');eyebrow.textContent=step.eyebrow;heading.textContent=step.title;copy.textContent=step.desc;
  [...dots.children].forEach((d,k)=>d.classList.toggle('is-current',k===current));prev.disabled=current===0;next.innerHTML=current===steps.length-1?'Finish <span aria-hidden="true">✓</span>':'Next <span aria-hidden="true">→</span>';
  scrollToStep();requestAnimationFrame(()=>{place();card.focus({preventScroll:true})});
 }
 function startTour(){if(running)return;previousFocus=document.activeElement;running=true;layer.hidden=false;layer.setAttribute('aria-hidden','false');restart.hidden=true;document.body.classList.add('tour-active');history.replaceState(null,'',location.pathname+location.search+'#tour');showStep(0);}
-function endTour(){if(!running)return;running=false;layer.hidden=true;layer.setAttribute('aria-hidden','true');restart.hidden=false;document.body.classList.remove('tour-active');if(location.hash==='#tour')history.replaceState(null,'',location.pathname+location.search);(previousFocus?.isConnected?previousFocus:restart).focus({preventScroll:true});}
+function endTour(){if(!running)return;running=false;undoTourShot();tourArrow.hidden=true;layer.hidden=true;layer.setAttribute('aria-hidden','true');restart.hidden=false;document.body.classList.remove('tour-active');if(location.hash==='#tour')history.replaceState(null,'',location.pathname+location.search);(previousFocus?.isConnected?previousFocus:restart).focus({preventScroll:true});}
 function openFigure(){const button=document.querySelector(steps[current].figure);if(!button)return;const dialog=document.getElementById('image-dialog');const large=document.getElementById('dialog-large-image');const src=button.dataset.fullImage||button.querySelector('img')?.src;if(!src)return;large.src=src;large.alt=button.querySelector('img')?.alt||'';document.getElementById('dialog-caption').textContent=button.dataset.caption||stepCaption();if(!dialog.open)dialog.showModal();}
 function stepCaption(){return `${steps[current].title} — original CEDAR demonstration screenshot.`}
 document.getElementById('tour-start').addEventListener('click',startTour);
