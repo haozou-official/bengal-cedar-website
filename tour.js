@@ -12,7 +12,7 @@ const steps=[
 
  {eyebrow:'SOURCE INSPECTION',title:'Open the original evidence.',desc:'Read provenance, linked statements, and highlighted source text.',target:'.evidence-visual .image-button',region:[.035,.16,.93,.78],shot:'tour_hormuz_open.png',figure:'.evidence-visual .image-button'},
 
- {eyebrow:'BEYOND ENGLISH',title:'Sources are not limited to English.',desc:'An Arabic source appears beside the Ceuta report.',target:'.language-visual .image-button',region:[.585,.78,.38,.16],shot:'tour_ceuta_report.png',figure:'.language-visual .image-button'},
+ {eyebrow:'BEYOND ENGLISH',title:'Sources are not limited to English.',desc:'An Arabic source appears beside the Ceuta report.',target:'.language-visual .image-button',region:[.585,.585,.385,.13],shot:'p04_2.webp?v=20261105-hd-refresh',figure:'.language-visual .image-button'},
 
  {eyebrow:'SOURCE TO SUMMARY',title:'Follow the multilingual evidence into the report.',desc:'The source remains linked to the specific statement it supports.',target:'.language-visual .image-button',region:[.035,.205,.93,.155],shot:'tour_ceuta_open.png',arrow:true,figure:'.language-visual .image-button'},
 
@@ -28,7 +28,7 @@ const steps=[
 
  {eyebrow:'INCORPORATE',title:'The analyst makes the final decision.',desc:'Only approved information enters the living report.',target:'#dialogue-image-button',region:[.195,.811,.78,.165],dialogue:'incorporate',figure:'#dialogue-image-button'}
 ];
-document.documentElement.dataset.cedarTourVersion='2.9.0';
+document.documentElement.dataset.cedarTourVersion='2.9.1';
 const layer=document.getElementById('tour-layer');
 const focus=document.getElementById('tour-focus');const ring=document.getElementById('tour-ring');const card=document.getElementById('tour-card');
 const count=document.getElementById('tour-count');const eyebrow=document.getElementById('tour-eyebrow');const heading=document.getElementById('tour-heading');const copy=document.getElementById('tour-copy');
